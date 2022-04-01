@@ -9,23 +9,15 @@ def index():
     return render_template('./index.html')
 
 
-def td_to_hms(td):
-    t_seconds = td.total_seconds()
-    hours = t_seconds // 3600
-    minutes = (t_seconds % 3600) // 60
-    seconds = t_seconds % 60
-    return hours, minutes, seconds
-
-
 @app.post('/clock_out/<dt_id>')
 def clock_out(dt_id):
     current_time = datetime.now()
     t_clock = TimeClock.query.get(dt_id)
     t_clock.dt_out = current_time
-    stime = datetime.strptime(t_clock.dt_in, "%Y-%m-%d %H:%M:%S.%f")
-    etime = t_clock.dt_out
-    hours, minutes, seconds = td_to_hms(etime - stime)
+    stime, etime = t_clock.to_dt()
+    hours, minutes, seconds = t_clock.td_to_hms(etime - stime)
     t_clock.clock_total = f"{round(hours)}h, {round(minutes)}m {round(seconds)}s"
+    t_clock.cvt_to_dt()
     db.session.commit()
     
     return render_template('./index.html')
