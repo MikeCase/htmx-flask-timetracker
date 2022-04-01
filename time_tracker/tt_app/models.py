@@ -15,14 +15,8 @@ class TimeClock(db.Model):
 
     def to_dt(self):
         in_time = datetime.strptime(self.dt_in, "%Y-%m-%d %H:%M:%S.%f")
-        if self.dt_out: 
-            if self.dt_out is str():
-                out_time = datetime.strptime(self.dt_out, "%Y-%m-%d %H:%M:%S.%f")
-            elif self.dt_out is datetime:
-                out_time = self.dt_out
-                return in_time, out_time
-        else:
-            return
+        out_time = self.dt_out
+        return out_time - in_time
 
     def td_to_hms(self, td):
         t_seconds = td.total_seconds()
@@ -30,4 +24,5 @@ class TimeClock(db.Model):
         minutes = (t_seconds % 3600) // 60
         seconds = t_seconds % 60
         return hours, minutes, seconds
+    
     

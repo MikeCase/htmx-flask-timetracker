@@ -14,10 +14,9 @@ def clock_out(dt_id):
     current_time = datetime.now()
     t_clock = TimeClock.query.get(dt_id)
     t_clock.dt_out = current_time
-    stime, etime = t_clock.to_dt()
-    hours, minutes, seconds = t_clock.td_to_hms(etime - stime)
+    total_time = t_clock.to_dt()
+    hours, minutes, seconds = t_clock.td_to_hms(total_time)
     t_clock.clock_total = f"{round(hours)}h, {round(minutes)}m {round(seconds)}s"
-    t_clock.cvt_to_dt()
     db.session.commit()
     
     return render_template('./index.html')
@@ -44,6 +43,7 @@ def clock_in():
         clocks.append([clock_id, dt_in, dt_out, dt_total])
 
     return render_template('./clockin.html', clock_time=clocks)
+
 
 @app.get('/clocks')
 def clocks():

@@ -8,14 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" integrity="sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="container">
-        <p class="title is-title">Time Tracker</p>
-        <div class="block">
-            <button class="button is-normal is-primary" hx-post="/clock_in" hx-target="#clock">Clock In</button>
-            
+    <div class="hero">
+        <div class="container">
+            <p class="title is-title">Time Tracker</p>
+            <div class="block">
+                <button class="button is-normal is-primary" hx-post="/clock_in" hx-target="#clock">Clock In</button>
+                
+            </div>
         </div>
     </div>
-    <div id="clock" class="container" hx-get="/clocks" hx-trigger="load">
+    <div id="clock" class="hero" hx-get="/clocks" hx-trigger="load">
+        
         
     </div>
 </body>
