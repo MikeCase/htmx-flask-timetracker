@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    {% for d in report_dates %}
+    <div class="block">
+        <a href="/reports/{{d.strftime('%Y-%m-%d')}}">{{d.strftime("%B %d, %Y")}}</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

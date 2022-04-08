@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="hero">
+        <div class="container">
+            <h1 class="title">List for {{ report_for_date[0].dt_in.strftime("%Y-%m-%d") }}</h1>
+            <h2 class="subtitle">
+            Total clock for date: <br>
+            {{ totals_for_date[0] }}h {{ totals_for_date[1]}}m {{ totals_for_date[2] }}s
+            </h2>
+            
+            <table class="table">
+                <thead>
+                    <th>Time in</th>
+                    <th>Time out</th>
+                    <th>Total Clock</th>
+                </thead>
+                <tbody>
+                    {% for report in report_for_date %}
+                    <tr>
+                        <td>
+                        {{ report.dt_in.strftime("%H:%M:%S") }}
+                        </td>
+                        <td>
+                        {% if report.dt_out != None %}
+                            {{ report.dt_out.strftime("%H:%M:%S") }}
+                        {% endif %}
+                        </td>
+                        <td>
+                        
+                        {% if report.dt_out != None and report.clock_total != None %}
+                            {% set h,m,s = report.clock_total.split(",") %}
+                            {% set hour = h|int %}
+                            {% set minute = m|int %}
+                            {% set second = s|int %}
+                            
+                            {{ hour }}h, {{ minute }}m, {{ second }}s
+                        {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h2 class="subtotal" hx-trigger="load" hx-target="#totaltime" hx-swap="outerHTML">
+                {# {{ totals.h_total }}h, {{totals.m_total}}m, {{totals.s_total}}s #}
+            </h2>
+        </div>
+    </div>
+{% endblock %}

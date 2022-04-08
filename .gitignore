@@ -1,6 +1,7 @@
 /.env
 /.venv
 /__pycache__
-time_tracker/tt.db
+time_tracker/tt_prod.db
+time_tracker/tt_dev.db
 time_tracker/__pycache__
 time_tracker/tt_app/__pycache__
