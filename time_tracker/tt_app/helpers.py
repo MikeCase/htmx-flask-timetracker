@@ -8,9 +8,14 @@ def create_xl( report_date, report_list=None):
     wb = Workbook()
     dest_filename = os.path.join(app.root_path, f"{app.config['UPLOADS_FOLDER']}/{report_date}.xlsx")
     print(dest_filename)
-    for data in report_list:
-        print(dir(data))
+    ws = wb.active
+    
+    if report_list != None:
+        for data in report_list:
+            ws.append([data.dt_in.strftime("%I:%M:%S"), data.dt_out.strftime("%I:%M:%S"), data.clock_total])
         
+    wb.save(dest_filename)
+
 
 
 def list_clocks(clock_times):
