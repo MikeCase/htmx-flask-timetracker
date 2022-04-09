@@ -2,13 +2,10 @@
 
     <table class="table">
         <thead>
-            {# <!-- <th>Clockin Date</th> --> #}
             <th>Clockin Time</th>
-            {# <!-- <th>Clockout Date</th> --> #}
             <th>Clockout Time</th>
             <th>Total</th>
             <th>Clock Out</th>
-    
         </thead>
         <tbody >
         {% for datetime in clock_time%}
@@ -21,17 +18,20 @@
             <td>{{ datetime[2].strftime("%I:%M:%S")}}</td>
             {% endif %}
             <td>
-            {% if datetime[3] != None %}
+            {% if datetime[2] != None and datetime[3] != None %}
                 {% set h,m,s = datetime[3].split(",") %}
                 {% set hour = h|int %}
                 {% set minute = m|int %}
                 {% set second = s|int %}
                 
                 {{ hour }}h, {{ minute }}m, {{ second }}s
+            {% else %}
+                None
+                
             {% endif %}
             </td>
             {% if datetime[2] == None %}
-            <td><button class="button is-small is-danger" hx-post="/clock_out/{{ datetime[0] }}" hx-target="body">Clock Out</button></td>
+                <td><button class="button is-small is-danger" hx-post="/clock_out/{{ datetime[0] }}" hx-target="body">Clock Out</button></td>
             {% endif %}
         </tr>
         {% endfor %}

@@ -1,9 +1,11 @@
 from time_tracker import app, db
+from time_tracker.tt_app.models import TimeClock, TCReports
+from time_tracker.tt_app.helpers import total_time, list_clocks, create_xl
 from flask import render_template, redirect
 from sqlalchemy import desc, func, distinct
-from time_tracker.tt_app.models import TimeClock, TCReports
-from time_tracker.tt_app.helpers import total_time
 from datetime import datetime, date
+
+
 
 @app.route('/')
 def index():
@@ -32,18 +34,9 @@ def clock_in():
     db.session.commit()
     clocks = []
     clock_times = TimeClock.query.order_by(desc(TimeClock.dt_id)).all()
-    for clock in clock_times:
-        
-        dt_in = clock.dt_in
-        dt_total = clock.clock_total
-        clock_id = clock.dt_id
-        if clock.dt_out != None:
-            dt_out = clock.dt_out
-        else:
-            dt_out = None
-            
-        clocks.append([clock_id, dt_in, dt_out, dt_total])
-
+    
+    clocks = list_clocks(clock_times)
+    
     return render_template('./clockin.html', clock_time=clocks)
 
 
@@ -52,16 +45,8 @@ def clocks():
     clocks = []
     clock_times = TimeClock.query.order_by(desc(TimeClock.dt_id)).all()
     
-    for clock in clock_times:
-        dt_in = clock.dt_in
-        dt_total = clock.clock_total
-        clock_id = clock.dt_id
-        if clock.dt_out != None:
-            dt_out = clock.dt_out
-        else:
-            dt_out = None
+    clocks = list_clocks(clock_times)
 
-        clocks.append([clock_id, dt_in, dt_out, dt_total])
     return render_template('./clockin.html', clock_time=clocks)
 
 ## Route for showing the report page
@@ -79,7 +64,7 @@ def get_report_date(report_date):
     
     # Get the total for clock time
     total_times = total_time(report_for_date)
-    return render_template('./reports.html', totals_for_date=total_times, report_for_date=report_for_date)
+    return render_template('./reports.html', totals_for_date=total_times, report_date=report_date, report_for_date=report_for_date)
 
 ## Route for building a report
 @app.get('/reports')
@@ -92,4 +77,14 @@ def get_dates_list():
             dates.append(dd)
     
     return render_template('./reports_list.html', report_dates=dates)
+
 ## Route to show/save a report
+@app.post('/reports/save/<report_date>')
+def save_report(report_date):
+    report_date = datetime.strptime(f"{report_date} 00:00:00.00", "%Y-%m-%d %H:%M:%S.%f")
+    report_for_date = TimeClock.query.filter(func.date(TimeClock.dt_in) == func.date(report_date)).all()
+    print('Sending to create_xl()')
+    create_xl(report_date, report_list=report_for_date)
+    print("end")
+    totals = total_time(report_for_date)
+    return render_template("./reports.html", report_for_date=report_for_date, totals_for_date=totals)

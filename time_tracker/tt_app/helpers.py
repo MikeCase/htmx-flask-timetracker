@@ -1,3 +1,37 @@
+import os
+from time_tracker import app
+from openpyxl import Workbook
+# from openpyxl import get_column_letter
+from datetime import datetime
+
+def create_xl( report_date, report_list=None):
+    wb = Workbook()
+    dest_filename = os.path.join(app.root_path, f"{app.config['UPLOADS_FOLDER']}/{report_date}.xlsx")
+    print(dest_filename)
+    for data in report_list:
+        print(dir(data))
+        
+
+
+def list_clocks(clock_times):
+    clocks = []
+    for clock in clock_times:
+            
+            dt_in = clock.dt_in
+            if clock.clock_total != None:
+                dt_total = clock.clock_total
+            else:
+                dt_toal = None
+            clock_id = clock.dt_id
+            if clock.dt_out != None:
+                dt_out = clock.dt_out
+            else:
+                dt_out = None
+                
+            clocks.append([clock_id, dt_in, dt_out, dt_total])
+
+    return clocks
+
 def total_time(report_day):
     """Total the clock times from a specified date."""
     ht = 0
@@ -6,7 +40,8 @@ def total_time(report_day):
 
     for clock_time in report_day:
         # Split the clock_time into hours(h), minutes(m) and seconds(s)
-        if clock_time.clock_total != None:
+        if clock_time.dt_out != None and clock_time.clock_total != None:
+            # print(clock_time.clock_total)
             h,m,s = clock_time.clock_total.split(',')
             # Convert to integers
             h = int(h)
@@ -29,7 +64,10 @@ def total_time(report_day):
             if st >= 60:
                 st = st - 60
                 mt = mt + 1
-
+        else:
+            ht = ht
+            mt = mt
+            st = st
 
         # print(f"{ht}h {mt}m {st}s")
         total_times = [ht, mt, st] # Add the totals to a list and ship off to the view. 

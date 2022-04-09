@@ -8,6 +8,7 @@ class TimeClock(db.Model):
     dt_out = db.Column(db.DateTime)
     clock_total = db.Column(db.Text)
 
+    
     def __init__(self, dt_in, dt_out=None, clock_total=0):
         self.dt_date = datetime.today()
         self.dt_in = dt_in
