@@ -21,4 +21,4 @@ class DevConfig(BaseConfig):
     DEBUG=True
     TESTING=True
     DB_NAME="tt_dev.db"
-    UPLOADS_FOLDER="static/uploads"
+    UPLOADS_FOLDER=os.getenv('UPLOADS_FOLDER')
