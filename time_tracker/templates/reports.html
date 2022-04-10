@@ -40,7 +40,9 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% if None not in report_for_date %}
             <button class="button is-small is-info" hx-post="/reports/save/{{report_for_date[0].dt_in.strftime('%Y-%m-%d')}}" hx-target="body">Save Report</button>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
