@@ -1,10 +1,12 @@
 FROM python:3.8-alpine
 
-WORKDIR /time_app
+WORKDIR /app
 
-COPY requirements.txt /time_app/requirements.txt
+COPY requirements.txt /app/requirements.txt
+RUN python3.8 -m venv .venv
+RUN source .venv/bin/activate
 RUN pip install -r requirements.txt
 
-COPY . /time_app
+COPY . /app
 
 CMD ["gunicorn", "-b", "0.0.0.0:5555", "time_tracker:app"]
