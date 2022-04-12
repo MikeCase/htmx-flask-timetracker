@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
-app.config["ENV"] = "development"
+app.config["ENV"] = "dev"
 
 if app.config['ENV'] == "production":
     app.config.from_object('conf.ProductionConfig')
