@@ -11,4 +11,4 @@ services:
               target: /home/splaq/docker/timetrackerapp
         networks:
             default:
-                name: nginx-proxy-manager_default
+                driver: nginx-proxy-manager_default
