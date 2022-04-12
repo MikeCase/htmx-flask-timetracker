@@ -9,6 +9,7 @@ services:
             - type: bind
               source: .
               target: /home/splaq/docker/timetrackerapp
-        networks:
-            default: 
-                name: nginx-proxy-manager_default
+              
+    networks:
+        default: 
+            name: nginx-proxy-manager_default
