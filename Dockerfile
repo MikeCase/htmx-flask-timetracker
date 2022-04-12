@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 
 COPY . /ttapp
 
-CMD ["gunicorn", "-b", "0.0.0.0:5555", "wsgi:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5555", "time_tracker:app"]
