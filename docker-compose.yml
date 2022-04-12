@@ -7,7 +7,7 @@ services:
             - 5555:5555
         volumes:
             - type: bind
-              source: .
+              source: ./time_tracker/static/uploads
               target: /home/splaq/docker/timetrackerapp
 
 networks:
