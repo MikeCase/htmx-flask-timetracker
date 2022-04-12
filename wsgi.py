@@ -1,3 +1,3 @@
-from .time_tracker import app
+from time_tracker import app
 
 app.run()
