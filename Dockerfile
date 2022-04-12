@@ -1,10 +1,10 @@
-FROM python:3.8-buster
+FROM python:3.8-alpine
 
-WORKDIR /
+WORKDIR /time_app
 
-COPY requirements.txt /requirements.txt
+COPY requirements.txt /time_app/requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY . /
+COPY . /time_app
 
 CMD ["gunicorn", "-b", "0.0.0.0:5555", "time_tracker:app"]
