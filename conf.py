@@ -16,6 +16,7 @@ class ProductionConfig(BaseConfig):
     DEBUG=False
     SECRET_KEY=os.getenv('PROD_SECRET_KEY')
     DB_NAME = "tt_prod.db"
+    UPLOADS_FOLDER=os.getenv('UPLOADS_FOLDER')
 
 class DevConfig(BaseConfig):
     DEBUG=True
