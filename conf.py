@@ -15,10 +15,10 @@ class ProductionConfig(BaseConfig):
     """Production configuration class"""
     DEBUG=False
     SECRET_KEY=os.getenv('PROD_SECRET_KEY')
-    DB_NAME = tt_prod.db
+    DB_NAME = "tt_prod.db"
 
 class DevConfig(BaseConfig):
     DEBUG=True
     TESTING=True
-    DB_NAME=tt_dev.db
+    DB_NAME="tt_dev.db"
     UPLOADS_FOLDER=os.getenv('UPLOADS_FOLDER')
