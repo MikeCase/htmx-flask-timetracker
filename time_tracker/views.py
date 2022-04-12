@@ -1,6 +1,6 @@
 from time_tracker import app, db
-from time_tracker.tt_app.models import TimeClock, TCReports
-from time_tracker.tt_app.helpers import total_time, list_clocks, create_xl
+from time_tracker.models import TimeClock, TCReports
+from time_tracker.helpers import total_time, list_clocks, create_xl
 from flask import render_template, redirect
 from sqlalchemy import desc, func, distinct
 from datetime import datetime, date

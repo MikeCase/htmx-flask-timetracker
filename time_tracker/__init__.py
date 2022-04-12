@@ -13,5 +13,5 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{app.config['DB_NAME']}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-import time_tracker.tt_app.views
+import time_tracker.views
 db.create_all()
