@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+    api:
+        build: .
+        image: timetracker:latest
+        ports:
+            - 5555:5555
+        volumes:
+            - type: bind
+              source: .
+              target: /home/splaq/docker/timetrackerapp
