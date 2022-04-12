@@ -1,12 +1,12 @@
 FROM python:3.8-alpine
 
-WORKDIR /app
+WORKDIR /ttapp
 
-COPY requirements.txt /app/requirements.txt
+COPY requirements.txt /ttapp/requirements.txt
 RUN python3.8 -m venv .venv
 RUN source .venv/bin/activate
 RUN pip install -r requirements.txt
 
-COPY . /app
+COPY . /ttapp
 
-CMD ["gunicorn", "-b", "0.0.0.0:5555", "time_tracker:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5555", "wsgi:app"]
