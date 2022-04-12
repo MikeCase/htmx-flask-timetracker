@@ -7,4 +7,4 @@ RUN pip3 install -r requirements.txt
 
 COPY . /app
 ENTRYPOINT [ "gunicorn" ]
-CMD ["-b", "0.0.0.0:5555", "time_tracker:app"]
+CMD ["-b", "0.0.0.0:5555", "wsgi:app"]
