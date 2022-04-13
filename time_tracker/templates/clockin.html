@@ -11,11 +11,23 @@
         {% for datetime in clock_time%}
     
         <tr>
-            <td>{{ datetime[1].strftime("%I:%M:%S")}}</td>
+            <td>
+            {% if datetime[1].strftime("%I:%M:%S")[0] == 1%}
+                {{ datetime[1].strftime("%I:%M:%S") }}
+            {% else %}
+                {{ datetime[1].strftime("%I:%M:%S")[1:] }}
+            {% endif %}
+            </td>
             {% if datetime[2] == None %}
             <td></td>
             {% else %}
-            <td>{{ datetime[2].strftime("%I:%M:%S")}}</td>
+            <td>
+            {% if datetime[2].strftime("%I:%M:%S")[0] == 1%}
+                {{ datetime[2].strftime("%I:%M:%S") }}
+            {% else %}
+                {{ datetime[2].strftime("%I:%M:%S")[1:] }}
+            {% endif %}
+            </td>
             {% endif %}
             <td>
             {% if datetime[2] != None and datetime[3] != None %}

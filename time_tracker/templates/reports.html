@@ -19,12 +19,21 @@
                     {% for report in report_for_date %}
                     <tr>
                         <td>
-                        {{ report.dt_in.strftime("%H:%M:%S") }}
+                        {% if report.dt_in.strftime("%I:%M:%S")[0] == 1 %}
+                            {{ report.dt_in.strftime("%I:%M:%S") }}
+                        {% else %}
+                            {{ report.dt_in.strftime("%I:%M:%S")[1:] }}
+                        {% endif %}
                         </td>
                         <td>
                         {% if report.dt_out != None %}
-                            {{ report.dt_out.strftime("%H:%M:%S") }}
+                            {% if report.dt_out.strftime("%I:%M%:S")[0] == 1 %}
+                                {{ report.dt_out.strftime("%I:%M:%S") }}
+                            {% else %}
+                                {{ report.dt_out.strftime("%I:%M:%S")[1:] }}
+                            {% endif %}
                         {% endif %}
+
                         </td>
                         <td>
                             {% if report.dt_out != None and report.clock_total != None %}
