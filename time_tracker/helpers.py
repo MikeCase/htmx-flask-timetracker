@@ -13,9 +13,12 @@ def create_xl( report_date, report_list=None):
     if report_list != None:
         for data in report_list:
             if data.dt_out != None:
-                ws.append([data.dt_in.strftime("%I:%M:%S"), data.dt_out.strftime("%I:%M:%S"), data.clock_total])
+                h,m,s = data.clock_total.split(",")
+                
+                ws.append([data.dt_in.strftime("%I:%M:%S"), data.dt_out.strftime("%I:%M:%S"), h, m, s])
     
     wb.save(dest_filename)
+    return f"{report_date.strftime('%Y_%M_%d')}.xlsx"
 
 def list_clocks(clock_times):
     clocks = []

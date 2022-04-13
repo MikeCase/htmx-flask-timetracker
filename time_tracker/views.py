@@ -1,7 +1,8 @@
+import os
 from time_tracker import app, db
 from time_tracker.models import TimeClock, TCReports
 from time_tracker.helpers import total_time, list_clocks, create_xl
-from flask import render_template, redirect
+from flask import render_template, redirect, send_from_directory
 from sqlalchemy import desc, func, distinct
 from datetime import datetime, date
 
@@ -79,12 +80,19 @@ def get_dates_list():
     return render_template('./reports_list.html', report_dates=dates)
 
 ## Route to show/save a report
-@app.post('/reports/save/<report_date>')
+@app.get('/reports/save/<report_date>')
 def save_report(report_date):
     report_date = datetime.strptime(f"{report_date} 00:00:00.00", "%Y-%m-%d %H:%M:%S.%f")
     report_for_date = TimeClock.query.filter(func.date(TimeClock.dt_in) == func.date(report_date)).all()
     print('Sending to create_xl()')
-    create_xl(report_date, report_list=report_for_date)
-    print("end")
+    filename = create_xl(report_date, report_list=report_for_date)
+    print(filename)
+    reports_folder = os.path.join(app.root_path, app.config['UPLOADS_FOLDER'])
     totals = total_time(report_for_date)
-    return render_template("./reports.html", report_for_date=report_for_date, totals_for_date=totals)
+    # return render_template("./reports.html", report_for_date=report_for_date, totals_for_date=totals)
+
+    try:
+        return send_from_directory(reports_folder, path=filename, as_attachment=True)
+    except FileNotFoundError:
+        print(app.config['UPLOADS_FOLDER'])
+        abort(404)

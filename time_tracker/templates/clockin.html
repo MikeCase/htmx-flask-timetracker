@@ -12,7 +12,7 @@
     
         <tr>
             <td>
-            {% if datetime[1].strftime("%I:%M:%S")[0] == 1%}
+            {% if datetime[1].strftime("%I:%M:%S")[0] == "1" %}
                 {{ datetime[1].strftime("%I:%M:%S") }}
             {% else %}
                 {{ datetime[1].strftime("%I:%M:%S")[1:] }}
@@ -22,7 +22,7 @@
             <td></td>
             {% else %}
             <td>
-            {% if datetime[2].strftime("%I:%M:%S")[0] == 1%}
+            {% if datetime[2].strftime("%I:%M:%S")[0] == "1" %}
                 {{ datetime[2].strftime("%I:%M:%S") }}
             {% else %}
                 {{ datetime[2].strftime("%I:%M:%S")[1:] }}

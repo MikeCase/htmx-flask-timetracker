@@ -19,7 +19,7 @@
                     {% for report in report_for_date %}
                     <tr>
                         <td>
-                        {% if report.dt_in.strftime("%I:%M:%S")[0] == 1 %}
+                        {% if report.dt_in.strftime("%I:%M:%S")[0] == "1" %}
                             {{ report.dt_in.strftime("%I:%M:%S") }}
                         {% else %}
                             {{ report.dt_in.strftime("%I:%M:%S")[1:] }}
@@ -27,7 +27,7 @@
                         </td>
                         <td>
                         {% if report.dt_out != None %}
-                            {% if report.dt_out.strftime("%I:%M%:S")[0] == 1 %}
+                            {% if report.dt_out.strftime("%I:%M:%S")[0] == "1" %}
                                 {{ report.dt_out.strftime("%I:%M:%S") }}
                             {% else %}
                                 {{ report.dt_out.strftime("%I:%M:%S")[1:] }}
@@ -50,7 +50,7 @@
                 </tbody>
             </table>
             {% if None not in report_for_date %}
-            <button class="button is-small is-info" hx-post="/reports/save/{{report_for_date[0].dt_in.strftime('%Y-%m-%d')}}" hx-target="body">Save Report</button>
+            <a href="/reports/save/{{report_for_date[0].dt_in.strftime('%Y-%m-%d')}}"><button id="save-button" class="button is-small is-info" target="blank">Save Report</button></a>
             {% endif %}
         </div>
     </div>

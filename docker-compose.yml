@@ -1,6 +1,7 @@
 version: '3.9'
 services:
-    api:
+    webapp:
+        restart: unless-stopped
         build: .
         image: timetracker:latest
         env_file:
@@ -9,8 +10,12 @@ services:
             - 5555:5555
         volumes:
             - type: bind
-              source: ./time_tracker/static/uploads
-              target: /home/splaq/docker/timetrackerapp
+              source: /home/splaq/docker/timetrackerapp/uploads
+              target: /app/time_tracker/static/uploads
+
+            - type: bind
+              source: /home/splaq/docker/timetrackerapp/db
+              target: /app/time_tracker/db
 
 networks:
     default:
