@@ -3,7 +3,7 @@
 {% block content %}
 <div class="content">
     {% for d in report_dates %}
-    <div class="block">
+    <div class="container">
         <a href="/reports/{{d.strftime('%Y-%m-%d')}}">{{d.strftime("%B %d, %Y")}}</a>
     </div>
     {% endfor %}
